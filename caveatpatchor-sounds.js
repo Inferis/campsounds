@@ -11,31 +11,25 @@ if (playSounds) {
       },
 
       urlExists: function(url) {
-        var http = new XMLHttpRequest();
-        http.open('HEAD', url, false);
-        http.send();
-        return http.status!=404;
+        // TODO
+        return true;
       },
 
       detectSound: function(message) {
-        /* we are going to use the messageID to uniquely identify our requestJSON request
-        so we don't check pending messages */
-        if (!message.pending() && message.kind === 'text') {
-          text = message.bodyElement().innerText;
-          if ((match = text.match(/^\/sound\s+(.+)/))) {
-            var url = soundRepoURL + match[1] + ".wav?raw=true";
-            alert(url);
-            // var sound = "";
-            // if (this.urlExists(url)) {
-               sound = url;
-            //}
-            alert(sound);
-            if (sound) {
-              var snd = new Audio(sound);
-              snd.play();
-            }
-          }
-        }
+        var match, url, sound, text;
+
+        if (message.pending()) return;
+        if (!message.kind === "text") return;
+
+        text = message.bodyElement().innerText;
+        if (!(match = text.match(/^\/sound\s+(.+)/))) return;
+
+        url = soundRepoURL + match[1] + ".wav?raw=true";
+        if (this.urlExists(url)) sound = url;
+        if (!sound) return;
+
+        var snd = new Audio(sound);
+        snd.play();
       },
 
     onMessagesInsertedBeforeDisplay: function(messages) {

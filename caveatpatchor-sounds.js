@@ -2,6 +2,7 @@
 
 
 var playSounds = true;
+var soundRepoURL   = "http://github.com/Inferis/campsounds/blob/master/sounds/";
 
 if (playSounds) {
 
@@ -22,7 +23,7 @@ if (playSounds) {
         if (!message.pending() && message.kind === 'text') {
           text = message.bodyElement().innerText;
           if ((match = text.match(/^\/sound\s+(.+)/))) {
-            var url = "http://github.com/Inferis/campsounds/blob/master/sounds/" + match[1] + ".wav?raw=true";
+            var url = soundRepoURL + match[1] + ".wav?raw=true";
             alert(url);
             // var sound = "";
             // if (this.urlExists(url)) {
